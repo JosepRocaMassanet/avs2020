@@ -3,32 +3,57 @@
 <head>
     <meta charset="utf-8">
     <title>UGT - AVS 2020-2024</title>
+    <style>
+        body {
+            font-family: 'Open Sans Condensed', sans-serif;
+        }
+        .columna-izquierda {
+            text-align: left;
+            margin-right: 0px;
+            padding-right: 10px;
+            float: left;
+            width: 270px;
+        }
+        .pregunta {
+            margin-bottom: 15px;
+            text-align: left;
+            padding-left: 10px;
+        }
+        #submit {
+            width: 150px;
+            height: 55px;
+            border: medium;
+            margin-top: 20px;
+            cursor: pointer;
+            align-content: center;
+            font-size: 20px;
+            border-style: double;
+        }
+        input {
+            border-radius: 5px;
+            -moz-border-radius: 5px;
+            -webkit-border-radius: 5px;
+            box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            font-size: 1em;
+            font-weight: 300;
+            padding: 5px;
+            width: 120px;
+        }
+    </style>
     <script>
-        function calculateAVS() {
-            const salconv = parseFloat(document.getElementsByName('salconv')[0].value) || 0;
-            const sir1 = parseFloat(document.getElementsByName('sir1')[0].value) || 0;
-            const sir2 = parseFloat(document.getElementsByName('sir2')[0].value) || 0;
-            const sir4 = parseFloat(document.getElementsByName('sir4')[0].value) || 0;
-            const sir5 = parseFloat(document.getElementsByName('sir5')[0].value) || 0;
-            const sir6 = parseFloat(document.getElementsByName('sir6')[0].value) || 0;
-            const cp1 = parseFloat(document.getElementsByName('cp1')[0].value) || 0;
-            const cp2 = parseFloat(document.getElementsByName('cp2')[0].value) || 0;
-            const cp3 = parseFloat(document.getElementsByName('cp3')[0].value) || 0;
-            const cp4 = parseFloat(document.getElementsByName('cp4')[0].value) || 0;
-            const cp5 = parseFloat(document.getElementsByName('cp5')[0].value) || 0;
-            const cp6 = parseFloat(document.getElementsByName('cp6')[0].value) || 0;
-            const cp7 = parseFloat(document.getElementsByName('cp7')[0].value) || 0;
-            const turno1 = parseFloat(document.getElementsByName('turno1')[0].value) || 0;
-            const nocturnidad = parseFloat(document.getElementsByName('nocturnidad')[0].value) || 0;
-            const variables = parseFloat(document.getElementsByName('variables')[0].value) || 0;
-            const reten = parseFloat(document.getElementsByName('reten')[0].value) || 0;
-            const antig = parseFloat(document.getElementsByName('antig')[0].value) || 0;
-            const espdedic = parseFloat(document.getElementsByName('espdedic')[0].value) || 0;
-            const pjm = parseFloat(document.getElementsByName('pjm')[0].value) || 0;
-            const pagasocial = parseFloat(document.getElementsByName('pagasocial')[0].value) || 0;
-            const irpf = parseFloat(document.getElementsByName('irpf')[0].value) || 0;
+        function calculateAVS(event) {
+            event.preventDefault();
 
-            const avs = salconv + sir1 + sir2 + sir4 + sir5 + sir6 + cp1 + cp2 + cp3 + cp4 + cp5 + cp6 + cp7 + turno1 + nocturnidad + variables + reten + antig + espdedic + pjm + pagasocial;
+            const form = document.forms[0];
+            const formData = new FormData(form);
+            let avs = 0;
+
+            formData.forEach((value, key) => {
+                avs += parseFloat(value) || 0;
+            });
+
+            const irpf = parseFloat(formData.get('irpf')) || 0;
 
             document.getElementById('result').innerHTML = `
                 <h2>Resultado del Cálculo del AVS 2020:</h2>
@@ -37,282 +62,279 @@
             `;
         }
     </script>
-    <style>
-        /* (Tu CSS aquí, puedes copiarlo de tu archivo actual) */
-    </style>
 </head>
-<body>
+<body background="UGT-COLOR.png">
     <center><h2>CÁLCULO APROXIMADO DE LA MENSUALIDAD AL ACOGERSE AL AVS</h2></center>
     <center><h4>Toma tu nómina y rellena las casillas de los conceptos incluidos en el cálculo del AVS<br>(Usa puntos en lugar de comas para los decimales)</h4></center>
-    <form onsubmit="calculateAVS(); return false;">
+    <form onsubmit="calculateAVS(event);">
         <div id="page">
             <fieldset>
                 <legend><h2>Conceptos incluidos en el AVS</h2></legend>
                 <div class="columna-izquierda">
                     <div class="pregunta">
                         <label>1010 - Salario Convenio Marco: </label>
-                        <input type="text" name="salconv" value="0"> 
+                        <input type="number" name="salconv" value="0">
                     </div>
                     <div class="pregunta">
                         <label>1030: Retribución Fija</label>
-                        <input type="text" name="fija" value="0"> 
+                        <input type="number" name="fija" value="0">
                     </div>
                     <div class="pregunta">
                         <label>1040 - Salario Pers Singular:</label>
-                        <input type="text" name="salariosingular" value="0"> 
+                        <input type="number" name="salariosingular" value="0">
                     </div>
                     <div class="pregunta">
                         <label>1060 - Sal. Indiv. Reconocido 2:</label>
-                        <input type="text" name="sir2" value="0"> 
+                        <input type="number" name="sir2" value="0">
                     </div>
                     <div class="pregunta">
                         <label>1090 - Sal. Indiv. Reconocido 5: </label>
-                        <input type="text" name="sir5" value="0">
+                        <input type="number" name="sir5" value="0">
                     </div>
                     <div class="pregunta">
                         <label>2011 - Complemento Individual: </label>
-                        <input type="text" name="indiv2" value="0">
+                        <input type="number" name="indiv2" value="0">
                     </div>
                     <div class="pregunta">
                         <label>2020 - Complemento Personal 1: </label>
-                        <input type="text" name="cp1" value="0">
+                        <input type="number" name="cp1" value="0">
                     </div>
                     <div class="pregunta">
                         <label>2040 - Complemento Personal 3: </label>
-                        <input type="text" name="cp3" value="0">
+                        <input type="number" name="cp3" value="0">
                     </div>
                     <div class="pregunta">
                         <label>2060 - Complemento Personal 5: </label>
-                        <input type="text" name="cp5" value="0">
+                        <input type="number" name="cp5" value="0">
                     </div>
                     <div class="pregunta">
                         <label>2080 - Complemento Personal 7: </label>
-                        <input type="text" name="cp7" value="0">
+                        <input type="number" name="cp7" value="0">
                     </div>
                     <div class="pregunta">
                         <label>2005 - Complemento Puesto Indiv: </label>
-                        <input type="text" name="indiv" value="0">
+                        <input type="number" name="indiv" value="0">
                     </div>
                     <div class="pregunta">
                         <label>Plus Jorn Mantenim AMCT: </label>
-                        <input type="text" name="amct" value="0">
+                        <input type="number" name="amct" value="0">
                     </div>
                     <div class="pregunta">
                         <label>2A04 - Comp Personal 10: </label>
-                        <input type="text" name="cp10" value="0">
+                        <input type="number" name="cp10" value="0">
                     </div>
                     <div class="pregunta">
                         <label>2A07 - Comp Personal 15: </label>
-                        <input type="text" name="cp15" value="0">
+                        <input type="number" name="cp15" value="0">
                     </div>
                     <div class="pregunta">
                         <label>2A01 - Vinculación Enher: </label>
-                        <input type="text" name="vinc" value="0">
+                        <input type="number" name="vinc" value="0">
                     </div>
                     <div class="pregunta">
                         <label>2A02 - Antigüedad ERZ: </label>
-                        <input type="text" name="anig3" value="0">
+                        <input type="number" name="anig3" value="0">
                     </div>
                     <div class="pregunta">
                         <label>2A62 - Antigüedad Fecsa: </label>
-                        <input type="text" name="anigfecsa" value="0">
+                        <input type="number" name="anigfecsa" value="0">
                     </div>
                     <div class="pregunta">
                         <label>2A68 - Antigüedad: </label>
-                        <input type="text" name="anig6" value="0">
+                        <input type="number" name="anig6" value="0">
                     </div>
                     <div class="pregunta">
                         <label>2A63 - Antigüedad Guadisa: </label>
-                        <input type="text" name="aniguadisa" value="0">
+                        <input type="number" name="aniguadisa" value="0">
                     </div>
                     <div class="pregunta">
                         <label>2A71 - Antigüedad Heasa: </label>
-                        <input type="text" name="anigheasa" value="0">
+                        <input type="number" name="anigheasa" value="0">
                     </div>
                     <div class="pregunta">
                         <label>2A72 - Antigüedad Hedatsa: </label>
-                        <input type="text" name="anighedatsa" value="0">
+                        <input type="number" name="anighedatsa" value="0">
                     </div>
                     <div class="pregunta">
                         <label>2A73 - Antigüedad Pysesa: </label>
-                        <input type="text" name="anigpysesa" value="0">
+                        <input type="number" name="anigpysesa" value="0">
                     </div>
                     <div class="pregunta">
                         <label>3250 - Dife. Reten.Lab.menos16h: </label>
-                        <input type="text" name="retenlab4" value="0">
+                        <input type="number" name="retenlab4" value="0">
                     </div>
                     <div class="pregunta">
                         <label>3280 - Comp.Pers Reten Fest/desc: </label>
-                        <input type="text" name="retenfest" value="0">
+                        <input type="number" name="retenfest" value="0">
                     </div>
                     <div class="pregunta">
                         <label>3110 - Turno Cerrado Cont CM: </label>
-                        <input type="text" name="turno" value="0">
+                        <input type="number" name="turno" value="0">
                     </div>
                     <div class="pregunta">
                         <label>3120 - CP Turno Cerr Cont: </label>
-                        <input type="text" name="turno2" value="0">
+                        <input type="number" name="turno2" value="0">
                     </div>
                     <div class="pregunta">
                         <label>3300 - Comp.Horas Nocturn CM: </label>
-                        <input type="text" name="nocturnidad" value="0">
+                        <input type="number" name="nocturnidad" value="0">
                     </div>
                     <div class="pregunta">
                         <label>3310 - CP Hora Nocturna CM: </label>
-                        <input type="text" name="nocturnidad2" value="0">
+                        <input type="number" name="nocturnidad2" value="0">
                     </div>
                     <div class="pregunta">
                         <label>5070 - Sist.Gestión Objeti. Geo: </label>
-                        <input type="text" name="geo" value="0">
+                        <input type="number" name="geo" value="0">
                     </div>
                     <div class="pregunta">
                         <label>5075 - Gestión Rendimiento OFV: </label>
-                        <input type="text" name="ofv" value="0">
+                        <input type="number" name="ofv" value="0">
                     </div>
                     <div class="pregunta">
                         <label>9175 - Aux.Ded. CCCED Ere/Pens: </label>
-                        <input type="text" name="auxdec" value="0">
+                        <input type="number" name="auxdec" value="0">
                     </div>
                     <div class="pregunta">
                         <label>9176 - Aux.Dedic. CCCED Ereable: </label>
-                        <input type="text" name="auxdec2" value="0">
+                        <input type="number" name="auxdec2" value="0">
                     </div>
                     <div class="pregunta">
                         <label>9195 - Aux.Disp.Trans.8ªEre/Pens:</label>
-                        <input type="text" name="auxdis" value="0">
+                        <input type="number" name="auxdis" value="0">
                     </div>
                 </div>
                 <div class="pregunta">
                     <label>1020 - Retribución Fija Excluids:</label>
-                    <input type="text" name="fija2" value="0">
+                    <input type="number" name="fija2" value="0">
                 </div>
                 <div class="pregunta">
                     <label>1031 - Retribuc. Fija Individual:</label>
-                    <input type="text" name="fija3" value="0">
+                    <input type="number" name="fija3" value="0">
                 </div>
                 <div class="pregunta">
                     <label>1050 - Sal. Indiv. Reconocido 1:</label>
-                    <input type="text" name="sir1" value="0">
+                    <input type="number" name="sir1" value="0">
                 </div>
                 <div class="pregunta">
                     <label>1080 - Sal. Indiv. Reconocido 4: </label>
-                    <input type="text" name="sir4" value="0">
+                    <input type="number" name="sir4" value="0">
                 </div>
                 <div class="pregunta">
                     <label>1100 - Sal. Indiv. Reconocido 6: </label>
-                    <input type="text" name="sir6" value="0">
+                    <input type="number" name="sir6" value="0">
                 </div>
                 <div class="pregunta">
                     <label>2030- Complemento Personal 2: </label>
-                    <input type="text" name="cp2" value="0">
+                    <input type="number" name="cp2" value="0">
                 </div>
                 <div class="pregunta">
                     <label>2050 - Complemento Personal 4: </label>
-                    <input type="text" name="cp4" value="0">
+                    <input type="number" name="cp4" value="0">
                 </div>
                 <div class="pregunta">
                     <label>2070 - Complemento Personal 6: </label>
-                    <input type="text" name="cp6" value="0">
+                    <input type="number" name="cp6" value="0">
                 </div>
                 <div class="pregunta">
                     <label>2A15 - Antig Sueldo Empresa GESA: </label>
-                    <input type="text" name="antig" value="0">
+                    <input type="number" name="antig" value="0">
                 </div>
                 <div class="pregunta">
                     <label>2A60 - Antig Comp Puesto GE: </label>
-                    <input type="text" name="antig2" value="0">
+                    <input type="number" name="antig2" value="0">
                 </div>
                 <div class="pregunta">
                     <label>2010 - Compto. Personal Singular: </label>
-                    <input type="text" name="sing" value="0">
+                    <input type="number" name="sing" value="0">
                 </div>
                 <div class="pregunta">
                     <label>2025 - Compto. Personal Sing 1: </label>
-                    <input type="text" name="sing1" value="0">
+                    <input type="number" name="sing1" value="0">
                 </div>
                 <div class="pregunta">
                     <label>3240 - Retén Labor.Menos 16 horas: </label>
-                    <input type="text" name="reten" value="0">
+                    <input type="number" name="reten" value="0">
                 </div>
                 <div class="pregunta">
                     <label>2A06 - Comp Personal 11: </label>
-                    <input type="text" name="cp11" value="0">
+                    <input type="number" name="cp11" value="0">
                 </div>
                 <div class="pregunta">
                     <label>2A08 - Comp Personal 16: </label>
-                    <input type="text" name="cp16" value="0">
+                    <input type="number" name="cp16" value="0">
                 </div>
                 <div class="pregunta">
                     <label>2A03 - Antig.no pensionable FECSA: </label>
-                    <input type="text" name="anig4" value="0">
+                    <input type="number" name="anig4" value="0">
                 </div>
                 <div class="pregunta">
                     <label>2A61 - Antig.Total pensionable FECSA: </label>
-                    <input type="text" name="anig5" value="0">
+                    <input type="number" name="anig5" value="0">
                 </div>
                 <div class="pregunta">
                     <label>2A09 - Compens.20 años Servicio: </label>
-                    <input type="text" name="comp20" value="0">
+                    <input type="number" name="comp20" value="0">
                 </div>
                 <div class="pregunta">
                     <label>2A64 - Antigüedad Viesgo: </label>
-                    <input type="text" name="anigviesgo" value="0">
+                    <input type="number" name="anigviesgo" value="0">
                 </div>
                 <div class="pregunta">
                     <label>2A66 - Antigüedad Nansa: </label>
-                    <input type="text" name="anignansa" value="0">
+                    <input type="number" name="anignansa" value="0">
                 </div>
                 <div class="pregunta">
                     <label>2A69 - Antigüedad Terbesa: </label>
-                    <input type="text" name="anigterbesa" value="0">
+                    <input type="number" name="anigterbesa" value="0">
                 </div>
                 <div class="pregunta">
                     <label>2A70 - Antigüedad EE. Ter: </label>
-                    <input type="text" name="anigter" value="0">
+                    <input type="number" name="anigter" value="0">
                 </div>
                 <div class="pregunta">
                     <label>Paga Social SE,ERZ,GU,GI,ENE: </label>
-                    <input type="text" name="anigpaga" value="0">
+                    <input type="number" name="anigpaga" value="0">
                 </div>
                 <div class="pregunta">
                     <label>3210 - Retén Labor.16 o +Horas: </label>
-                    <input type="text" name="retenlab" value="0">
+                    <input type="number" name="retenlab" value="0">
                 </div>
                 <div class="pregunta">
                     <label>3220 - Comp.Pers.RetenLab.16o+: </label>
-                    <input type="text" name="retenlab2" value="0">
+                    <input type="number" name="retenlab2" value="0">
                 </div>
                 <div class="pregunta">
                     <label>3270 - Reten dias festiv.y desca: </label>
-                    <input type="text" name="retenfest2" value="0">
+                    <input type="number" name="retenfest2" value="0">
                 </div>
                 <div class="pregunta">
                     <label>3060 - Turno Abierto Cont CM: </label>
-                    <input type="text" name="turnoab" value="0">
+                    <input type="number" name="turnoab" value="0">
                 </div>
                 <div class="pregunta">
                     <label>3070 - C.Pers. T.Abiert Cont CM: </label>
-                    <input type="text" name="turnoab2" value="0">
+                    <input type="number" name="turnoab2" value="0">
                 </div>
                 <div class="pregunta">
                     <label>3160 - Turno Abierto Discon CM: </label>
-                    <input type="text" name="turnodis" value="0">
+                    <input type="number" name="turnodis" value="0">
                 </div>
                 <div class="pregunta">
                     <label>3170 - CP Turno Ab Disc CM: </label>
-                    <input type="text" name="turnodis2" value="0">
+                    <input type="number" name="turnodis2" value="0">
                 </div>
                 <div class="pregunta">
                     <label>Plus Jorn Mnto As Pontes: </label>
-                    <input type="text" name="mantaspontes" value="0">
+                    <input type="number" name="mantaspontes" value="0">
                 </div>
                 <div class="pregunta">
                     <label>Plus Resid Ceuta Melilla: </label>
-                    <input type="text" name="ceutamelilla" value="0">
+                    <input type="number" name="ceutamelilla" value="0">
                 </div>
                 <div class="pregunta">
                     <label>9196 - Aux.Disp.Trans.8ªEreable:</label>
-                    <input type="text" name="auxdis2" value="0">
+                    <input type="number" name="auxdis2" value="0">
                 </div>
             </fieldset>
             <fieldset>
@@ -325,13 +347,13 @@
                     <option value="tramo4">Hasta 5 años (80%)</option>
                 </select><br><br>
                 <label>% IRPF aproximado: </label>
-                <input type="text" name="irpf" value="0">
+                <input type="number" name="irpf" value="0">
             </fieldset>
             <fieldset>
                 <legend><h2>Datos para el cálculo de mermas</h2></legend>
                 <div>Cálculo desde los 63 años hasta la Esperanza de Vida actual</div><br>
-                <div class="pregunta"><label>Base Reguladora (BR): </label><input type="text" name="br" value="4070.10"></div>
-                <div class="pregunta"><label>Pensión Máxima Anual: </label><input type="text" name="pension" value="37566.82"></div>
+                <div class="pregunta"><label>Base Reguladora (BR): </label><input type="number" name="br" value="4070.10"></div>
+                <div class="pregunta"><label>Pensión Máxima Anual: </label><input type="number" name="pension" value="37566.82"></div>
                 <div class="pregunta"><label>¿Cuantos años has cotizado? </label>
                 <select name="coefred">
                     <option value="cr1">Menos de 38 años y 6 meses (coeficiente reductor 8% anual)</option>
@@ -339,10 +361,10 @@
                     <option value="cr3">Más de 41 años y 6 meses y menos de 44 años y 6 meses (coeficiente reductor 7% anual)</option>
                     <option value="cr4">Más de 44 años y 6 meses (coeficiente reductor 6.5%)</option>
                 </select><br><br>
-                <div class="pregunta"><label>Coeficiente reductor por Renta Máxima: </label><input type="text" name="cr" value="4"> (0.5%/Trimestre)</div>
-                <div class="pregunta"><label>Esperanza de Vida Actual: </label><input type="text" name="espvida" value="0"></div>
+                <div class="pregunta"><label>Coeficiente reductor por Renta Máxima: </label><input type="number" name="cr" value="4"> (0.5%/Trimestre)</div>
+                <div class="pregunta"><label>Esperanza de Vida Actual: </label><input type="number" name="espvida" value="0"></div>
             </fieldset>
-            <div><input id="submit" class="centrado" type="submit" name="submit" value="Calcular"></div>
+            <div><input id="submit" type="submit" name="submit" value="Calcular"></div>
         </div>
     </form>
     <div id="result"></div>
