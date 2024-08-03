@@ -1,0 +1,133 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>AVS 2020</title>
+<style type="text/css">
+
+	label {
+    display:inline-block;
+    margin-top:20px;
+    letter-spacing:1px;
+}
+ 
+
+ 
+form {
+    margin:0 auto;
+    width:90%;
+
+}
+ 
+input, textarea {
+    width:249px;
+    height:27px;
+    background:#666666;
+    border:2px solid #f6f6f6;
+    padding:9px;
+    margin-top:5px;
+    font-size:20px;
+    color:#ffffff;
+	
+}
+ 
+textarea {
+    height:150px;
+}
+ 
+#submit {
+    width:150px;
+    height:55px;
+    border:none;
+    margin-top:20px;
+    cursor:pointer;
+    align-content: center;
+}
+div.contenedor {
+  width: 100%;
+ 
+}
+
+button.centrado {
+  width: 110px; /* Para que no se rompa en dos líneas, y lo translade tal cual. */
+  margin-left: 50%;
+  transform: translateX(-50%);
+}
+input.centrado {
+  width: 110px; /* Para que no se rompa en dos líneas, y lo translade tal cual. */
+  margin-left: 50%;
+  transform: translateX(-50%);
+}
+
+</style>
+		
+</head>
+
+<body>
+<form method="get" action="avs2020.php">
+		<h2><center>CÁLCULO APROXIMADO DEL AVS 2020</center></h2>
+		<fieldset>
+			<legend><h2>Datos de la nómina</h2></legend>
+		<div class="form-row" align="center">
+		<div class="column-half"><label>Salario Convenio Marco: </label><input type="number" name="salconv" value="0">
+		<label>Sal. Indiv. Reconocido 1:</label> <input type="number" name="sir1" value="0"></div>
+		</div>
+		<div class="form-row" align="center">
+		<label>Sal. Indiv. Reconocido 2: </label> <input type="number" name="sir2" value="0">
+		<label>Sal. Indiv. Reconocido 4: </label><input type="number" name="sir4" value="0">
+		</div>
+		<div class="form-row" align="center">
+		<label>Sal. Indiv. Reconocido 5: </label><input type="number" name="sir5" value="0">
+		<label>Sal. Indiv. Reconocido 6: </label><input type="number" name="sir6" value="0">
+			</div>
+			<div class="form-row" align="center">
+		<label>Complemento Personal 1: </label><input type="number" name="cp1" value="0">
+		<label>Complemento Personal 2: </label><input type="number" name="cp2" value="0">
+			</div>
+			<div class="form-row" align="center">
+		<label>Complemento Personal 3: </label><input type="number" name="cp3" value="0">			
+		<label>Complemento Personal 4: </label> <input type="number" name="cp4" value="0">
+			</div>
+				<div class="form-row" align="center">
+		<label>Complemento Personal 5: </label><input type="number" name="cp5" value="0">
+		<label>Complemento Personal 6: </label><input type="number" name="cp6" value="0">
+			</div>
+			<div class="form-row" align="center">
+		<label>Complemento Personal 7: </label><input type="number" name="cp7" value="0">
+		<label>Turno Cerrando Con. CM: </label><input type="number" name="turno1" value="0">
+			</div>
+			<div class="form-row" align="center">
+		<label>Nocturnidad (€ x hora): </label><input type="number" name="nocturnidad" value="0">
+		<label>Variables: </label><input type="number" name="variables" value="0">
+			</div>
+				<div class="form-row" align="center">
+		<label>Retén: </label><input type="number" name="reten" value="0">
+		<label>Antigüedad: </label><input type="number" name="antig" value="0">
+			</div>
+			<div class="form-row" align="center">
+		<label>Especial Dedicación (Conceptos ereables): </label><input type="number" name="espdedic" value="0"></div>
+			<div class="form-row" align="center">
+	    <label>Plus Jornada Mantenimiento: </label><input type="number" name="pjm" value="0">
+		<label>Paga Social: </label><input type="number" name="pagasocial" value="0">
+			</div>
+  </fieldset>
+			<fieldset>
+			<legend><h2>Datos personales</h2></legend>
+				<label>¿Cuantos años faltan para tu jubilación ordinaria? </label><select name="edad">
+			<option value="tramo1">Más de 11 años, hasta 15 años (60%)
+			</option>
+			<option value="tramo2">Más de 8 años, hasta 11 años (70%)
+			</option>
+			<option value="tramo3">Más de 5 años, hasta 8 años  (75%)
+			</option>
+			<option value="tramo4">Hasta 5 años (80%)
+			</option>
+		</select><br>
+					<label>% IRPF aproximado: </label><input type="number" name="irpf" value="0">
+    </fieldset>
+	<div class="contenedor">	 	
+		<input id="submit" class="centrado" type="submit" name="submit" value="Calcular"><br>
+	</div>
+	</form>
+</body>
+</html>
