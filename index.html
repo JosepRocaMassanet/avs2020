@@ -41,7 +41,185 @@
             width: 120px;
         }
     </style>
- 
+    <script>
+        function truncar(numero, digitos) {
+            const truncar = 10 ** digitos;
+            return Math.floor(numero * truncar) / truncar;
+        }
+
+        function calculateAVS(event) {
+            event.preventDefault();
+
+            const form = document.forms[0];
+            const formData = new FormData(form);
+
+            const salconv = parseFloat(formData.get('salconv')) || 0;
+            const sir1 = parseFloat(formData.get('sir1')) || 0;
+            const sir2 = parseFloat(formData.get('sir2')) || 0;
+            const sir4 = parseFloat(formData.get('sir4')) || 0;
+            const sir5 = parseFloat(formData.get('sir5')) || 0;
+            const sir6 = parseFloat(formData.get('sir6')) || 0;
+            const extra = ((salconv + sir1 + sir2 + sir4 + sir5 + sir6) * 2) / 12;
+
+            const cp1 = parseFloat(formData.get('cp1')) || 0;
+            const cp2 = parseFloat(formData.get('cp2')) || 0;
+            const cp3 = parseFloat(formData.get('cp3')) || 0;
+            const cp4 = parseFloat(formData.get('cp4')) || 0;
+            const cp5 = parseFloat(formData.get('cp5')) || 0;
+            const cp6 = parseFloat(formData.get('cp6')) || 0;
+            const cp7 = parseFloat(formData.get('cp7')) || 0;
+            const turno = parseFloat(formData.get('turno')) || 0;
+            const turno2 = parseFloat(formData.get('turno2')) || 0;
+            const nocturnidad = (parseFloat(formData.get('nocturnidad')) || 0) * 8 * 5;
+            const reten = parseFloat(formData.get('reten')) || 0;
+            const amct = parseFloat(formData.get('amct')) || 0;
+            const antig = parseFloat(formData.get('antig')) || 0;
+            const antig2 = parseFloat(formData.get('antig2')) || 0;
+            const edad = formData.get('edad');
+            const irpf = parseFloat(formData.get('irpf')) || 0;
+            const fija = parseFloat(formData.get('fija')) || 0;
+            const fija2 = parseFloat(formData.get('fija2')) || 0;
+            const fija3 = parseFloat(formData.get('fija3')) || 0;
+            const sing = parseFloat(formData.get('sing')) || 0;
+            const sing1 = parseFloat(formData.get('sing1')) || 0;
+            const salariosingular = parseFloat(formData.get('salariosingular')) || 0;
+            const cp10 = parseFloat(formData.get('cp10')) || 0;
+            const cp11 = parseFloat(formData.get('cp11')) || 0;
+            const cp15 = parseFloat(formData.get('cp15')) || 0;
+            const cp16 = parseFloat(formData.get('cp16')) || 0;
+            const indiv = parseFloat(formData.get('indiv')) || 0;
+            const indiv2 = parseFloat(formData.get('indiv2')) || 0;
+            const vinc = parseFloat(formData.get('vinc')) || 0;
+            const anig3 = parseFloat(formData.get('anig3')) || 0;
+            const anig6 = parseFloat(formData.get('anig6')) || 0;
+            const anig4 = parseFloat(formData.get('anig4')) || 0;
+            const anig5 = parseFloat(formData.get('anig5')) || 0;
+            const anigfecsa = parseFloat(formData.get('anigfecsa')) || 0;
+            const aniguadisa = parseFloat(formData.get('aniguadisa')) || 0;
+            const anigheasa = parseFloat(formData.get('anigheasa')) || 0;
+            const anighedatsa = parseFloat(formData.get('anighedatsa')) || 0;
+            const anigpysesa = parseFloat(formData.get('anigpysesa')) || 0;
+            const retenlab4 = parseFloat(formData.get('retenlab4')) || 0;
+            const retenfest = parseFloat(formData.get('retenfest')) || 0;
+            const nocturnidad2 = parseFloat(formData.get('nocturnidad2')) || 0;
+            const geo = parseFloat(formData.get('geo')) || 0;
+            const ofv = parseFloat(formData.get('ofv')) || 0;
+            const auxdec = parseFloat(formData.get('auxdec')) || 0;
+            const auxdec2 = parseFloat(formData.get('auxdec2')) || 0;
+            const auxdis = parseFloat(formData.get('auxdis')) || 0;
+            const comp20 = parseFloat(formData.get('comp20')) || 0;
+            const anigviesgo = parseFloat(formData.get('anigviesgo')) || 0;
+            const anignansa = parseFloat(formData.get('anignansa')) || 0;
+            const anigterbesa = parseFloat(formData.get('anigterbesa')) || 0;
+            const anigter = parseFloat(formData.get('anigter')) || 0;
+            const anigpaga = parseFloat(formData.get('anigpaga')) || 0;
+            const retenlab = parseFloat(formData.get('retenlab')) || 0;
+            const retenlab2 = parseFloat(formData.get('retenlab2')) || 0;
+            const retenfest2 = parseFloat(formData.get('retenfest2')) || 0;
+            const turnoab = parseFloat(formData.get('turnoab')) || 0;
+            const turnoab2 = parseFloat(formData.get('turnoab2')) || 0;
+            const turnodis = parseFloat(formData.get('turnodis')) || 0;
+            const turnodis2 = parseFloat(formData.get('turnodis2')) || 0;
+            const mantaspontes = parseFloat(formData.get('mantaspontes')) || 0;
+            const ceutamelilla = parseFloat(formData.get('ceutamelilla')) || 0;
+            const auxdis2 = parseFloat(formData.get('auxdis2')) || 0;
+            const pension = parseFloat(formData.get('pension')) || 0;
+            const coefred = formData.get('coefred');
+            const espvida = parseFloat(formData.get('espvida')) || 0;
+            const br = parseFloat(formData.get('br')) || 0;
+            const cr = parseFloat(formData.get('cr')) || 0;
+
+            let soluciona = salconv + sir1 + sir2 + sir4 + sir5 + sir6 + cp1 + cp2 + cp3 + cp4 + cp5 + cp6 + cp7 + turno + turno2 + nocturnidad + antig + antig2 + reten + amct + fija + fija2 + fija3 + sing + sing1 + salariosingular + cp10 + cp11 + cp15 + cp16 + indiv + indiv2 + vinc + anig3 + anig6 + anig4 + anig5 + anigfecsa + aniguadisa + anigheasa + anighedatsa + anigpysesa + retenlab4 + retenfest + nocturnidad2 + geo + ofv + auxdec + auxdec2 + auxdis + comp20 + anigviesgo + anignansa + anigterbesa + anigter + anigpaga + retenlab + retenlab2 + retenfest2 + turnoab + turnoab2 + turnodis + turnodis2 + mantaspontes + ceutamelilla + auxdis2 + extra;
+
+            let tramo = 0;
+            if (edad === "tramo1") {
+                tramo = 0.60;
+            } else if (edad === "tramo2") {
+                tramo = 0.70;
+            } else if (edad === "tramo3") {
+                tramo = 0.75;
+            } else if (edad === "tramo4") {
+                tramo = 0.80;
+            }
+
+            let solucionb = soluciona * tramo;
+            let irpfAdjusted = 100 - irpf;
+            let solucion = (solucionb * irpfAdjusted) / 100;
+
+            let pen = 0;
+            if (coefred === "cr1") {
+                pen = 16;
+            } else if (coefred === "cr2") {
+                pen = 15;
+            } else if (coefred === "cr3") {
+                pen = 14;
+            } else if (coefred === "cr4") {
+                pen = 13;
+            }
+
+            const mermabr = (br * pen) / 100;
+            const penreduc = br - mermabr;
+            const branual = br * 12;
+            const anos = espvida - 63;
+            const pensionmes = pension / 12;
+            const pension12 = pension / 14;
+            const difpenreduc = (pensionmes * cr) / 100;
+            const penreduc2 = pensionmes - difpenreduc;
+
+            let merma = 0;
+            if (penreduc > penreduc2) {
+                merma = pensionmes - penreduc2;
+            } else {
+                merma = pensionmes - penreduc;
+            }
+
+            const merma1 = merma * 12;
+            const mermames1 = merma / 12;
+            let inc = 0;
+            let mermainc = merma * 12;
+            for (let i = 1; i <= anos; i++) {
+                inc = mermainc * 0.015;
+                mermainc += inc;
+            }
+
+            const mermaTotal = merma1 * anos + mermainc;
+
+            const pago = soluciona * 0.80;
+            const solucionx = pago * 12 - penreduc2;
+            let merma2 = 0;
+            if (penreduc > penreduc2) {
+                merma2 = pago - penreduc2;
+            } else {
+                merma2 = pago - penreduc;
+            }
+
+            document.getElementById('result').innerHTML = `
+                <h1>CÁLCULO ORIENTATIVO APROXIMADO AL ACOGERSE AL AVS 2020-2024</h1>
+                <h4>(En ningún caso el siguiente resultado tiene validez vinculante, sino que es un cálculo meramente orientativo)</h4>
+                <fieldset>
+                    <legend><h2>Resultado</h2></legend>
+                    <ul>
+                        <li>Parte proporcional de las pagas extra prorrateadas a 12 mensualidades: €${truncar(extra, 2)}/mes.</li>
+                        <li>Base Total sin aplicar el ${tramo * 100}% de reducción: €${truncar(soluciona, 2)}/mes.</li>
+                        <li>Base bruta en AVS, sin aplicar el ${irpfAdjusted}% de IRPF: €${truncar(solucionb, 2)}/mes.</li>
+                    </ul>
+                    <h1>Salario neto aproximado en prejubilación: €${truncar(solucion, 2)}/mes.</h1>
+                </fieldset>
+                <fieldset>
+                    <legend><h2>Mermas a liquidar en el AVS 2020-2024</h2></legend>
+                    <ul>
+                        <li>Base Reguladora: €${br}/mes</li>
+                        <li>Aplicamos el Coeficiente Reductor por Ley del ${pen}% por jubilación anticipada, quedando una pensión teórica de: €${truncar(penreduc, 2)}/mes</li>
+                        <li>La pensión máxima actual es de: €${truncar(pensionmes, 2)}/mes</li>
+                        <li>Límite Máximo 2020 (0,5/trimestre), penaliza un ${cr}% por 2 años sin cotizar al máximo, quedando una pensión teórica de: €${truncar(penreduc2, 2)}/mes</li>
+                        <li>Por tanto existe una merma mensual de: €${truncar(merma, 2)}/mes</li>
+                    </ul>
+                    <h3>La merma de pensión por jubilación anticipada es un pago único de aprox.: €${truncar(mermaTotal, 2)} (Crecimiento de un 1,5% anual)</h3>
+                    <h3>La merma de compensación hasta la fecha de jubilación ordinaria es un pago mensual bruto de aprox.: €${truncar(merma2, 2)}/mes</h3>
+                </fieldset>
+            `;
+        }
+    </script>
 </head>
 <body background="UGT-COLOR.png">
     <center><h2>CÁLCULO APROXIMADO DE LA MENSUALIDAD AL ACOGERSE AL AVS</h2></center>
