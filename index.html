@@ -1,0 +1,480 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>UGT - AVS 2020-2024 </title>
+	<script>
+
+			window.onload = function(){
+
+				//---Función de realizar la búsqueda
+				function searchInText( word, html ) {
+
+				    //---Eliminar los spans
+				    html = html.replace(/<span class="finded">(.*?)<\/span>/g, "$1");
+
+				    //---Crear la expresión regular que buscará la palabra
+				    var reg = new RegExp(word.replace(/[\[\]\(\)\{\}\.\-\?\*\+]/, "\\$&"), "gi");
+				    var htmlreg = /<\/?(?:a|b|br|em|font|img|p|span|strong)[^>]*?\/?>/g;
+
+				    //---Añadir los spans
+				    var array;
+				    var htmlarray;
+				    var len = 0;
+				    var sum = 0;
+				    var pad = 28 + word.length;
+
+				    while ((array = reg.exec(html)) != null) {
+
+				    	htmlarray = htmlreg.exec(html);
+				 
+				    	//---Verificar si la búsqueda coincide con una etiqueta html
+				        if(htmlarray != null && htmlarray.index < array.index && htmlarray.index + htmlarray[0].length > array.index + word.length){
+
+			        		reg.lastIndex = htmlarray.index + htmlarray[0].length;
+
+			        		continue;
+
+			        	}
+
+			        	len = array.index + word.length;
+
+				        html = html.slice(0, array.index) + "<span class='finded'>" + html.slice(array.index, len) + "</span>" + html.slice(len, html.length);
+
+				        reg.lastIndex += pad;
+
+				        if(htmlarray != null) htmlreg.lastIndex = reg.lastIndex;
+				        
+				        sum++;
+
+				    }
+
+				    return {total: sum, html: html};
+
+				}
+
+				//---Al presionar el botón de buscar
+				document.getElementById("button").addEventListener("click", function(){
+
+					var search = document.getElementById("search").value;
+
+					if(search.length == 0) return;
+
+				    var props = searchInText( search, document.getElementById("page").innerHTML );
+				    
+				    document.getElementById("results").innerHTML = (props.total > 0) ? "<br>Concepto encontrado y marcado en rojo. Desliza la barra hacia abajo hasta visualizarlo" : "<br>No se ha encontrado el concepto";
+				    
+				    if(props.total > 0) document.getElementById("page").innerHTML = props.html;
+
+				});
+
+			}
+
+		</script>
+
+</head>
+<style>
+body{
+	font-family: 'Open Sans Condensed', sans-serif;
+}
+
+.controls{
+	width: 100%;
+}
+
+#search{
+	border-radius: 5px;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+	box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	font-size: 1em;
+	font-weight: 300;
+	padding: 5px;
+	width: 30%;
+}
+
+#button{
+	border-radius: 5px;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+	font-size: 1em;
+	font-weight: 300;
+	padding: 5px;
+}
+
+#results{
+	color: #990000;
+	font-size: 1em;
+	margin-left: 20px;
+}
+
+#content{
+	height: 495px;
+	overflow: scroll;
+}
+
+img.image{
+	margin: 0 20px 20px 0;
+}
+
+span.finded{
+	background: #F00;
+	color: #FFF;
+}
+.resaltar{background-color:#FF0;}
+#page {
+    width: 600px;
+    margin: 0 auto;
+    background: #FFFFFF;
+    border: 10px #FFFFFF solid;
+    text-align: center;
+}
+    
+.columna-izquierda{
+    text-align:left;
+    margin-right:0px;
+    padding-right:10px;
+    float:left;
+    width:270px;
+    }
+ 
+
+    
+.cuadro-info{
+    width:100%;
+    margin-left:5%;
+    padding-top:5px;
+    padding-bottom:5px;
+    margin-bottom:20px;
+    border-style: dashed;
+    border-width: 1px;
+    border-color:#900;
+    background-color:#FFC
+    }
+
+
+ 
+.pregunta{
+    margin-bottom:15px;
+    text-align:left;
+	padding-left: 10px;
+}
+#submit {
+    width:150px;
+    height:55px;
+    border:medium;
+    margin-top:20px;
+    cursor:pointer;
+    align-content: center; 
+	font-size:20px;
+	border-style:double;
+}
+input{
+	border-radius: 5px;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+	box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	font-size: 1em;
+	font-weight: 300;
+	padding: 5px;
+	width: 120px;
+	}
+
+</style>
+<body background="UGT-COLOR.png">	
+
+	<center><h2>CÁLCULO APROXIMADO DE LA MENSUALIDAD AL ACOGERSE AL AVS</h2></center>
+	<!--<div class="controls" align="center">
+			<input id="search" type="text" placeholder="Introduce el código del concepto"/>
+			<button id="button">Buscar conceptos</button>
+			<span id="results"></span>
+	</div>-->
+	<center><h4>Toma tu nómina y rellena las casillas de los conceptos incluidos en el cálculo del AVS<br>(Usa puntos en lugar de comas para los decimales)</h4></center>
+	<form method="get" action="avs2020.php">
+	<div id="page">
+    <fieldset>
+			<legend><h2>Conceptos incluidos en el AVS</h2></legend>
+        <div class="columna-izquierda">
+            <div class="pregunta">
+              <label>1010 - Salario Convenio Marco: </label>
+              <input type="text" name="salconv" value="0"> 
+            </div>
+            <div class="pregunta" >
+              <label>1030: Retribución Fija</label>
+              <input type="text" name="fija" value="0"> 
+			</div>
+			<div class="pregunta" >
+              <label>1040 - Salario Pers Singular:</label>
+              <input type="text" name="salariosingular" value="0"> 
+			</div>
+			<div class="pregunta" >
+              <label>1060 - Sal. Indiv. Reconocido 2:</label>
+              <input type="text" name="sir2" value="0"> 
+			</div>
+            <div class="pregunta" >
+              <label>1090 - Sal. Indiv. Reconocido 5: </label>
+              <input type="text" name="sir5" value="0">
+            </div>
+		    <div class="pregunta" >
+			<label>2011 - Complemento Individual: </label><input type="text" name="indiv2" value="0">
+			</div>
+			<div class="pregunta" >
+			  <label>2020 - Complemento Personal 1: </label>
+			  <input type="text" name="cp1" value="0">
+			</div>
+			<div class="pregunta">
+			  <label>2040 - Complemento Personal 3: </label>
+			  <input type="text" name="cp3" value="0">
+			</div>
+			<div class="pregunta" >
+			  <label>2060 - Complemento Personal 5: </label>
+			  <input type="text" name="cp5" value="0">
+			</div>
+			<div class="pregunta" >
+			  <label>2080 - Complemento Personal 7: </label>
+			  <input type="text" name="cp7" value="0">
+			</div>
+			<div class="pregunta" >
+			<label>2005 - Complemento Puesto Indiv: </label><input type="text" name="indiv" value="0">
+			</div>
+			<div class="pregunta" >
+			<label>Plus Jorn Mantenim AMCT: </label><input type="text" name="amct" value="0">
+			</div>
+			<div class="pregunta" >
+			<label>2A04 - Comp Personal 10: </label><input type="text" name="cp10" value="0">
+			</div>
+			<div class="pregunta" >
+			<label>2A07 - Comp Personal 15: </label><input type="text" name="cp15" value="0">
+			</div>
+			<div class="pregunta" >
+			<label>2A01 - Vinculación Enher: </label><input type="text" name="vinc" value="0">
+			</div>
+			<div class="pregunta" >
+			<label>2A02 - Antigüedad ERZ: </label><input type="text" name="anig3" value="0">
+			</div>
+			<div class="pregunta" >
+			<label>2A62 - Antigüedad Fecsa: </label><input type="text" name="anigfecsa" value="0">
+			</div>
+			<div class="pregunta" >
+			<label>2A68 - Antigüedad: </label><input type="text" name="anig6" value="0">
+			</div>
+			<div class="pregunta" >
+			<label>2A63 - Antigüedad Guadisa: </label><input type="text" name="aniguadisa" value="0">
+			</div>
+			<div class="pregunta" >
+			<label>2A71 - Antigüedad Heasa: </label><input type="text" name="anigheasa" value="0">
+			</div>
+			<div class="pregunta" >
+			<label>2A72 - Antigüedad Hedatsa: </label><input type="text" name="anighedatsa" value="0">
+			</div>
+			<div class="pregunta" >
+			<label>2A73 - Antigüedad Pysesa: </label><input type="text" name="anigpysesa" value="0">
+			</div>
+		    <div class="pregunta" >
+			<label>3250 - Dife. Reten.Lab.menos16h: </label><input type="text" name="retenlab4" value="0">
+			</div>
+		    <div class="pregunta" >
+			<label>3280 - Comp.Pers Reten Fest/desc: </label><input type="text" name="retenfest" value="0">
+			</div>
+			<div class="pregunta" >
+			  <label>3110 - Turno Cerrado Cont CM: </label>
+			  <input type="text" name="turno" value="0">
+			</div>
+			<div class="pregunta" >
+			  <label>3120 - CP Turno Cerr Cont: </label>
+			  <input type="text" name="turno2" value="0">
+			</div>
+			<div class="pregunta" >
+			  <label>3300 - Comp.Horas Nocturn CM: </label>
+			  <input type="text" name="nocturnidad" value="0">
+			</div>
+			<div class="pregunta" >
+			  <label>3310 - CP Hora Nocturna CM: </label>
+			  <input type="text" name="nocturnidad2" value="0">
+			</div>
+			<div class="pregunta" >
+			  <label>5070 - Sist.Gestión Objeti. Geo: </label>
+			  <input type="text" name="geo" value="0">
+			</div>
+			<div class="pregunta" >
+			  <label>5075 - Gestión Rendimiento OFV: </label>
+			  <input type="text" name="ofv" value="0">
+			</div>
+			<div class="pregunta" >
+			  <label>9175 - Aux.Ded. CCCED Ere/Pens: </label>
+			  <input type="text" name="auxdec" value="0">
+			</div>
+			<div class="pregunta" >
+			  <label>9176 - Aux.Dedic. CCCED Ereable: </label>
+			  <input type="text" name="auxdec2" value="0">
+			</div>
+			<div class="pregunta" >
+			  <label>9195 - Aux.Disp.Trans.8ªEre/Pens:</label>
+			  <input type="text" name="auxdis" value="0">
+			</div>
+        </div> 
+		
+		
+        <div class="columna-derecha">
+        </div>
+		<div class="pregunta" >
+		  <label>1020 - Retribución Fija Excluids:</label>
+		  <input type="text" name="fija2" value="0">
+        </div>
+		<div class="pregunta" >
+		  <label>1031 - Retribuc. Fija Individual:</label>
+		  <input type="text" name="fija3" value="0">
+        </div>
+		<div class="pregunta" >
+		  <label>1050 - Sal. Indiv. Reconocido 1:</label>
+		  <input type="text" name="sir1" value="0">
+        </div>
+        <div class="pregunta" >
+          <label>1080 - Sal. Indiv. Reconocido 4: </label>
+          <input type="text" name="sir4" value="0">
+        </div>
+		<div class="pregunta" >
+		  <label>1100 - Sal. Indiv. Reconocido 6: </label>
+		  <input type="text" name="sir6" value="0">
+        </div>
+			<div class="pregunta" >
+			  <label>2030- Complemento Personal 2: </label>
+			  <input type="text" name="cp2" value="0">
+			</div>
+			<div class="pregunta" >
+			  <label>2050 - Complemento Personal 4: </label>
+			  <input type="text" name="cp4" value="0">
+			</div>
+			<div class="pregunta" >
+			  <label>2070 - Complemento Personal 6: </label>
+			  <input type="text" name="cp6" value="0">
+			</div>
+			<div class="pregunta" >
+			  <label>2A15 - Antig Sueldo Empresa GESA: </label>
+			  <input type="text" name="antig" value="0">
+			</div>
+		    <div class="pregunta" >
+		      <label>2A60 - Antig Comp Puesto GE: </label>
+		      <input type="text" name="antig2" value="0">
+			</div>
+			<div class="pregunta" >
+			<label>2010 - Compto. Personal Singular: </label>
+			  <input type="text" name="sing" value="0">
+			</div>
+		    <div class="pregunta" >
+		    <label>2025 - Compto. Personal Sing 1: </label>
+			  <input type="text" name="sing1" value="0">
+			</div>
+			<div class="pregunta" >
+			  <label>3240 - Retén Labor.Menos 16 horas: </label>
+			  <input type="text" name="reten" value="0">
+			</div>
+			<div class="pregunta" >
+			<label>2A06 - Comp Personal 11: </label><input type="text" name="cp11" value="0">
+			</div>
+			<div class="pregunta" >
+			<label>2A08 - Comp Personal 16: </label><input type="text" name="cp16" value="0">
+			</div>
+		    <div class="pregunta" >
+			<label>2A03 - Antig.no pensionable FECSA: </label><input type="text" name="anig4" value="0">
+			</div>
+		    <div class="pregunta" >
+			<label>2A61 - Antig.Total pensionable FECSA: </label><input type="text" name="anig5" value="0">
+			</div>
+			<div class="pregunta" >
+			<label>2A09 - Compens.20 años Servicio: </label><input type="text" name="comp20" value="0">
+			</div>
+			<div class="pregunta" >
+			<label>2A64 - Antigüedad Viesgo: </label><input type="text" name="anigviesgo" value="0">
+			</div>
+			<div class="pregunta" >
+			<label>2A66 - Antigüedad Nansa: </label><input type="text" name="anignansa" value="0">
+			</div>
+			<div class="pregunta" >
+			<label>2A69 - Antigüedad Terbesa: </label><input type="text" name="anigterbesa" value="0">
+			</div>
+			<div class="pregunta" >
+			<label>2A70 - Antigüedad EE. Ter: </label><input type="text" name="anigter" value="0">
+			</div>
+		    <div class="pregunta" >
+			<label>Paga Social SE,ERZ,GU,GI,ENE: </label><input type="text" name="anigpaga" value="0">
+			</div>
+			<div class="pregunta" >
+			<label>3210 - Retén Labor.16 o +Horas: </label><input type="text" name="retenlab" value="0">
+			</div>
+		    <div class="pregunta" >
+			<label>3220 - Comp.Pers.RetenLab.16o+: </label><input type="text" name="retenlab2" value="0">
+			</div>
+			<div class="pregunta" >
+			<label>3270 - Reten dias festiv.y desca: </label><input type="text" name="retenfest2" value="0">
+			</div>
+			<div class="pregunta" >
+			  <label>3060 - Turno Abierto Cont CM: </label>
+			  <input type="text" name="turnoab" value="0">
+			</div>
+			<div class="pregunta" >
+			  <label>3070 - C.Pers. T.Abiert Cont CM: </label>
+			  <input type="text" name="turnoab2" value="0">
+			</div>
+					<div class="pregunta" >
+			  <label>3160 - Turno Abierto Discon CM: </label>
+			  <input type="text" name="turnodis" value="0">
+			</div>
+			<div class="pregunta" >
+			  <label>3170 - CP Turno Ab Disc CM: </label>
+			  <input type="text" name="turnodis2" value="0">
+			</div>
+							<div class="pregunta" >
+			  <label>Plus Jorn Mnto As Pontes: </label>
+			  <input type="text" name="mantaspontes" value="0">
+			</div>
+			<div class="pregunta" >
+			  <label>Plus Resid Ceuta Melilla: </label>
+			  <input type="text" name="ceutamelilla" value="0">
+			</div>
+			<div class="pregunta" >
+			  <label>9196 - Aux.Disp.Trans.8ªEreable:</label>
+			  <input type="text" name="auxdis2" value="0">
+			</div>
+		</fieldset>
+		<fieldset>
+			<legend><h2>Datos personales</h2></legend>
+				<label>¿Cuantos años faltan para tu jubilación ordinaria? </label><select name="edad">
+			<option value="tramo1">Más de 11 años, hasta 15 años (60%)
+			</option>
+			<option value="tramo2">Más de 8 años, hasta 11 años (70%)
+			</option>
+			<option value="tramo3">Más de 5 años, hasta 8 años  (75%)
+			</option>
+			<option value="tramo4">Hasta 5 años (80%)
+			</option>
+		</select><br><br>
+					<label>% IRPF aproximado: </label><input type="text" name="irpf" value="0">
+    </fieldset>
+	<fieldset>
+		<legend><h2>Datos para el cálculo de mermas</h2></legend>
+		<div>Cálculo desde los 63 años hasta la Esperanza de Vida actual</div><br>
+
+		<div class="pregunta" ><label>Base Reguladora (BR): </label><input type="text" name="br" value="4070.10"></div>	
+		<div class="pregunta" ><label>Pensión Máxima Anual: </label><input type="text" name="pension" value="37566.82"></div>
+		<div class="pregunta" ><label>¿Cuantos años has cotizado? </label><select name="coefred">
+			<option value="cr1">Menos de 38 años y 6 meses (coeficiente reductor 8% anual)
+			</option>
+			<option value="cr2">Más de 38 años y 6 meses y menos de 41 años y 6 meses (coeficiente reductor 7.5% anual)
+			</option>
+			<option value="cr3">Más de 41 años y 6 meses y menos de 44 años y 6 meses (coeficiente reductor 7% anual)
+			</option>
+			<option value="cr4">Más de 44 años y 6 meses (coeficiente reductor 6.5%)
+			</option>
+		</select><br><br></div>
+		<div class="pregunta" ><label>Coeficiente reductor por Renta Máxima: </label><input type="text" name="cr" value="4"> (0.5%/Trimestre)</div>
+		<div class="pregunta" ><label>Esperanza de Vida Actual: </label><input type="text" name="espvida" value="0"></div>
+    </fieldset>
+		<div><input id="submit" class="centrado" type="submit" name="submit" value="Calcular"></div>
+		
+</div>
+	</form>
+</body>
+</html>
