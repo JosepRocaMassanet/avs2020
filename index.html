@@ -29,7 +29,7 @@
             font-size: 20px;
             border-style: double;
         }
-        input {
+        input, select {
             border-radius: 5px;
             -moz-border-radius: 5px;
             -webkit-border-radius: 5px;
@@ -49,16 +49,64 @@
             const formData = new FormData(form);
             let avs = 0;
 
-            formData.forEach((value, key) => {
-                avs += parseFloat(value) || 0;
+            const keys = [
+                "salconv", "sir1", "sir2", "sir4", "sir5", "sir6", 
+                "cp1", "cp2", "cp3", "cp4", "cp5", "cp6", "cp7", 
+                "turno1", "nocturnidad", "variables", "reten", 
+                "antig", "espdedic", "pjm", "pagasocial"
+            ];
+
+            keys.forEach(key => {
+                avs += parseFloat(formData.get(key)) || 0;
             });
 
             const irpf = parseFloat(formData.get('irpf')) || 0;
+            const edad = formData.get('edad');
+            const coefred = formData.get('coefred');
+            const cr = parseFloat(formData.get('cr')) || 0;
+            const espvida = parseFloat(formData.get('espvida')) || 0;
+
+            // Logic to handle the select values
+            let edadPercentage = 0;
+            switch (edad) {
+                case 'tramo1':
+                    edadPercentage = 60;
+                    break;
+                case 'tramo2':
+                    edadPercentage = 70;
+                    break;
+                case 'tramo3':
+                    edadPercentage = 75;
+                    break;
+                case 'tramo4':
+                    edadPercentage = 80;
+                    break;
+            }
+
+            let coefredPercentage = 0;
+            switch (coefred) {
+                case 'cr1':
+                    coefredPercentage = 8;
+                    break;
+                case 'cr2':
+                    coefredPercentage = 7.5;
+                    break;
+                case 'cr3':
+                    coefredPercentage = 7;
+                    break;
+                case 'cr4':
+                    coefredPercentage = 6.5;
+                    break;
+            }
 
             document.getElementById('result').innerHTML = `
                 <h2>Resultado del Cálculo del AVS 2020:</h2>
                 <p>El valor aproximado del AVS es: €${avs.toFixed(2)}</p>
                 <p>Porcentaje de IRPF aplicado: ${irpf}%</p>
+                <p>Edad: ${edadPercentage}%</p>
+                <p>Coeficiente reductor: ${coefredPercentage}%</p>
+                <p>Coeficiente reductor por Renta Máxima: ${cr}%</p>
+                <p>Esperanza de Vida Actual: ${espvida}</p>
             `;
         }
     </script>
