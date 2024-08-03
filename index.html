@@ -99,6 +99,9 @@
                     break;
             }
 
+            const br = parseFloat(formData.get('br')) || 0;
+            const pension = parseFloat(formData.get('pension')) || 0;
+
             document.getElementById('result').innerHTML = `
                 <h2>Resultado del Cálculo del AVS 2020:</h2>
                 <p>El valor aproximado del AVS es: €${avs.toFixed(2)}</p>
@@ -106,6 +109,8 @@
                 <p>Edad: ${edadPercentage}%</p>
                 <p>Coeficiente reductor: ${coefredPercentage}%</p>
                 <p>Coeficiente reductor por Renta Máxima: ${cr}%</p>
+                <p>Base Reguladora (BR): ${br}</p>
+                <p>Pensión Máxima Anual: ${pension}</p>
                 <p>Esperanza de Vida Actual: ${espvida}</p>
             `;
         }
