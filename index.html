@@ -76,7 +76,7 @@
             const antig = parseFloat(formData.get('antig')) || 0;
             const antig2 = parseFloat(formData.get('antig2')) || 0;
             const edad = formData.get('edad');
-            const irpf = parseFloat(formData.get('irpf')) || 0;
+            let irpf = parseFloat(formData.get('irpf')) || 0;
             const fija = parseFloat(formData.get('fija')) || 0;
             const fija2 = parseFloat(formData.get('fija2')) || 0;
             const fija3 = parseFloat(formData.get('fija3')) || 0;
@@ -200,7 +200,7 @@
                     <legend><h2>Resultado</h2></legend>
                     <ul>
                         <li>Parte proporcional de las pagas extra prorrateadas a 12 mensualidades: €${truncar(extra, 2)}/mes.</li>
-                        <li>Base Total sin aplicar el ${tramo * 100}% de reducción: €${truncar(soluciona, 2)}/mes.</li>
+                        <li>Base Total sin aplicar el ${tramo}% de reducción: €${truncar(soluciona, 2)}/mes.</li>
                         <li>Base bruta en AVS, sin aplicar el ${irpf}% de IRPF: €${truncar(solucionb, 2)}/mes.</li>
                     </ul>
                     <h1>Salario neto aproximado en prejubilación: €${truncar(solucion, 2)}/mes.</h1>
@@ -218,6 +218,7 @@
                     <h3>La merma de compensación hasta la fecha de jubilación ordinaria es un pago mensual bruto de aprox.: €${truncar(merma2, 2)}/mes</h3>
                 </fieldset>
             `;
+
             document.getElementById('result').scrollIntoView({ behavior: 'smooth' });
         }
     </script>
