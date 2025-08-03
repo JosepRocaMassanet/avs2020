@@ -73,7 +73,8 @@
             const cp7 = parseFloat(formData.get('cp7')) || 0;
             const turno = parseFloat(formData.get('turno')) || 0;
             const turno2 = parseFloat(formData.get('turno2')) || 0;
-            const nocturnidad = (parseFloat(formData.get('nocturnidad')) || 0) * 8 * 5;
+            const horasNocturnasAnuales = 68 * 8;
+            const nocturnidad = (parseFloat(formData.get('nocturnidad')) || 0) * (horasNocturnasAnuales / 12);
             const reten = parseFloat(formData.get('reten')) || 0;
             const amct = parseFloat(formData.get('amct')) || 0;
             const antig = parseFloat(formData.get('antig')) || 0;
