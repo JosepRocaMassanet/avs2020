@@ -52,6 +52,9 @@
 
             const form = document.forms[0];
             const formData = new FormData(form);
+            
+            const pagaeficiencia = parseFloat(formData.get('pagaeficiencia')) || 0;
+            const pagaeficienciaMensual = pagaeficiencia / 12;
 
             const salconv = parseFloat(formData.get('salconv')) || 0;
             const sir1 = parseFloat(formData.get('sir1')) || 0;
@@ -129,7 +132,7 @@
             const br = parseFloat(formData.get('br')) || 0;
             const cr = parseFloat(formData.get('cr')) || 0;
 
-            let soluciona = salconv + sir1 + sir2 + sir4 + sir5 + sir6 + cp1 + cp2 + cp3 + cp4 + cp5 + cp6 + cp7 + turno + turno2 + nocturnidad + antig + antig2 + reten + amct + fija + fija2 + fija3 + sing + sing1 + salariosingular + cp10 + cp11 + cp15 + cp16 + indiv + indiv2 + vinc + anig3 + anig6 + anig4 + anig5 + anigfecsa + aniguadisa + anigheasa + anighedatsa + anigpysesa + retenlab4 + retenfest + nocturnidad2 + geo + ofv + auxdec + auxdec2 + auxdis + comp20 + anigviesgo + anignansa + anigterbesa + anigter + anigpaga + retenlab + retenlab2 + retenfest2 + turnoab + turnoab2 + turnodis + turnodis2 + mantaspontes + ceutamelilla + auxdis2 + extra;
+            let soluciona = salconv + sir1 + sir2 + sir4 + sir5 + sir6 + cp1 + cp2 + cp3 + cp4 + cp5 + cp6 + cp7 + turno + turno2 + nocturnidad + antig + antig2 + reten + amct + fija + fija2 + fija3 + sing + sing1 + salariosingular + cp10 + cp11 + cp15 + cp16 + indiv + indiv2 + vinc + anig3 + anig6 + anig4 + anig5 + anigfecsa + aniguadisa + anigheasa + anighedatsa + anigpysesa + retenlab4 + retenfest + nocturnidad2 + geo + ofv + auxdec + auxdec2 + auxdis + comp20 + anigviesgo + anignansa + anigterbesa + anigter + anigpaga + retenlab + retenlab2 + retenfest2 + turnoab + turnoab2 + turnodis + turnodis2 + mantaspontes + ceutamelilla + auxdis2 + extra + pagaeficienciaMensual;
 
             let tramo = 0;
             if (edad === "tramo1") {
@@ -194,19 +197,20 @@
             }
 
             document.getElementById('result').innerHTML = `
-                <h1>CÁLCULO ORIENTATIVO APROXIMADO AL ACOGERSE AL AVS 2020-2024</h1>
+                <h1>CÁLCULO ORIENTATIVO APROXIMADO AL ACOGERSE AL AVS 2024-2029</h1>
                 <h4>(En ningún caso el siguiente resultado tiene validez vinculante, sino que es un cálculo meramente orientativo)</h4>
                 <fieldset>
                     <legend><h2>Resultado</h2></legend>
                     <ul>
                         <li>Parte proporcional de las pagas extra prorrateadas a 12 mensualidades: €${truncar(extra, 2)}/mes.</li>
+                        <li>Paga de eficiencia prorrateada: €${truncar(pagaeficienciaMensual, 2)}/mes.</li>
                         <li>Base Total sin aplicar el ${tramo * 100}% de reducción: €${truncar(soluciona, 2)}/mes.</li>
                         <li>Base bruta en AVS, sin aplicar el ${irpf}% de IRPF: €${truncar(solucionb, 2)}/mes.</li>
                     </ul>
                     <h1>Salario neto aproximado en prejubilación: €${truncar(solucion, 2)}/mes.</h1>
                 </fieldset>
                 <fieldset>
-                    <legend><h2>Mermas a liquidar en el AVS 2020-2024</h2></legend>
+                    <legend><h2>Mermas a liquidar en el AVS 2024-2029</h2></legend>
                     <ul>
                         <li>Base Reguladora: €${br}/mes</li>
                         <li>Aplicamos el Coeficiente Reductor por Ley del ${pen}% por jubilación anticipada, quedando una pensión teórica de: €${truncar(penreduc, 2)}/mes</li>
