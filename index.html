@@ -228,6 +228,14 @@
         }
     </script>
 </head>
+    <script>
+    window.addEventListener('DOMContentLoaded', () => {
+        document.querySelectorAll('input[type="number"]').forEach(input => {
+            input.setAttribute('step', 'any');
+        });
+    });
+</script>
+
 <body background="UGT-COLOR.png">
     <center><h2>CÁLCULO APROXIMADO DE LA MENSUALIDAD AL ACOGERSE AL AVS</h2></center>
     <center><h4>Toma tu nómina y rellena las casillas de los conceptos incluidos en el cálculo del AVS<br>(Usa puntos en lugar de comas para los decimales)</h4></center>
