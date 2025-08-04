@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>UGT - AVS 2020-2024</title>
+    <title>UGT - AVS 2024-2029</title>
     <style>
         body {
             font-family: 'Open Sans Condensed', sans-serif;
@@ -105,7 +105,7 @@
             const anigpysesa = parseFloat(formData.get('anigpysesa')) || 0;
             const retenlab4 = parseFloat(formData.get('retenlab4')) || 0;
             const retenfest = parseFloat(formData.get('retenfest')) || 0;
-            const nocturnidad2 = parseFloat(formData.get('nocturnidad2')) || 0;
+            const nocturnidad2 = (parseFloat(formData.get('nocturnidad2')) || 0) * (horasNocturnasAnuales / 12);
             const geo = parseFloat(formData.get('geo')) || 0;
             const ofv = parseFloat(formData.get('ofv')) || 0;
             const auxdec = parseFloat(formData.get('auxdec')) || 0;
@@ -341,11 +341,11 @@
                         <input type="number" name="turno2" value="0">
                     </div>
                     <div class="pregunta">
-                        <label>3300 - Comp.Horas Nocturn CM: </label>
+                        <label>3300 - Comp.Horas Nocturn CM: (hora)</label>
                         <input type="number" name="nocturnidad" value="0">
                     </div>
                     <div class="pregunta">
-                        <label>3310 - CP Hora Nocturna CM: </label>
+                        <label>3310 - CP Hora Nocturna CM: (hora) </label>
                         <input type="number" name="nocturnidad2" value="0">
                     </div>
                     <div class="pregunta">
@@ -522,8 +522,8 @@
             <fieldset>
                 <legend><h2>Datos para el cálculo de mermas</h2></legend>
                 <div>Cálculo desde los 63 años hasta la Esperanza de Vida actual</div><br>
-                <div class="pregunta"><label>Base Reguladora (BR): </label><input type="number" name="br" value="4070.10"></div>
-                <div class="pregunta"><label>Pensión Máxima Anual: </label><input type="number" name="pension" value="37566.82"></div>
+                <div class="pregunta"><label>Base Reguladora (BR): </label><input type="number" name="br" value="4909.50"></div>
+                <div class="pregunta"><label>Pensión Máxima Anual: </label><input type="number" name="pension" value="45746.40"></div>
                 <div class="pregunta"><label>¿Cuantos años has cotizado? </label>
                 <select name="coefred">
                     <option value="cr1">Menos de 38 años y 6 meses (coeficiente reductor 8% anual)</option>
